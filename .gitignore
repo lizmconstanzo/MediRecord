@@ -1,0 +1,16 @@
+# Archivos compilados y de build
+build/
+target/
+bin/
+*.class
+
+# Metadatos locales de Eclipse
+.metadata/
+.settings/
+.classpath
+.project
+Servers/
+
+# Temporales y logs
+*.log
+*.tmp
