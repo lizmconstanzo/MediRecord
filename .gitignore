@@ -1,3 +1,6 @@
+# Credenciales y configuracion local (NO subir)
+src/main/resources/db.properties
+
 # Archivos compilados y de build
 build/
 target/
@@ -15,8 +18,9 @@ Servers/
 *.log
 *.tmp
 
-# Package Files
+# Package Files (conservando librerias en WEB-INF/lib)
 *.jar
+!src/main/webapp/WEB-INF/lib/*.jar
 *.war
 *.nar
 *.ear

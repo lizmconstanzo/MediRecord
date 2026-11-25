@@ -1,32 +1,38 @@
 package com.medirecord.util;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConexionDB {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/medirecord?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8";
-    private static final String USER = "root";
-    private static final String PASSWORD = "zil.com*#prohibidO01";
+    private static final Properties PROPS = new Properties();
 
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+
+            try (InputStream input = ConexionDB.class.getClassLoader()
+                    .getResourceAsStream("db.properties")) {
+                if (input == null) {
+                    throw new RuntimeException("No se encontró src/main/resources/db.properties");
+                }
+                PROPS.load(input);
+            }
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("No se encontró el driver JDBC de MySQL", e);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al cargar db.properties", e);
         }
     }
 
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
-    }
-
-    public static void main(String[] args) {
-        try (Connection conn = getConnection()) {
-            System.out.println("¡Conexión exitosa a MySQL en MediRecord!");
-        } catch (SQLException e) {
-            System.out.println("Error al conectar a MySQL: " + e.getMessage());
-        }
+        String url = PROPS.getProperty("db.url");
+        String user = PROPS.getProperty("db.user");
+        String password = PROPS.getProperty("db.password");
+        return DriverManager.getConnection(url, user, password);
     }
 }

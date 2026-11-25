@@ -1,0 +1,3 @@
+db.url=jdbc:mysql://localhost:3306/medirecord?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
+db.user=medirecord_app
+db.password=LaCasadeAlofoke3!
